@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
+import CreateNewBlog from "./components/CreateNewBlog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -7,6 +8,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState("");
   const [errorMessage, setErrorMessage] = useState([]);
+  const [notification, setNotification] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -38,8 +40,10 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
+      setNotification("wrong username or password");
       setErrorMessage("Wrong credentials");
       setTimeout(() => {
+        setNotification("");
         setErrorMessage(null);
       }, 5000);
     }
@@ -53,10 +57,26 @@ const App = () => {
     setPassword("");
   };
 
+  const handleAddBlog = async (newBlog) => {
+    try {
+      const blog = await blogService.create(newBlog);
+      setNotification(`a new blog ${blog.title}! by ${blog.author} added`);
+      setTimeout(() => {
+        setNotification("");
+      }, 5000);
+    } catch (exception) {
+      setErrorMessage("error adding a blog post");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
+        {notification}
         <form onSubmit={handleLogin}>
           <div>
             username
@@ -85,9 +105,11 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      {notification}
       <p>
         {user.name} logged in<button onClick={handleLogout}>logout</button>
       </p>
+      <CreateNewBlog onAddBlog={handleAddBlog} />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
