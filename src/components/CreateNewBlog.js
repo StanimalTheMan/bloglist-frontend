@@ -11,8 +11,10 @@ const CreateNewBlog = (props) => {
     props.onAddBlog({ title, author, url });
   };
 
+  const showWhenVisible = { display: props.createVisible ? "" : "none" };
+
   return (
-    <div>
+    <div style={showWhenVisible}>
       <h2>create new</h2>
 
       <form onSubmit={handleFormSubmit}>
@@ -43,8 +45,13 @@ const CreateNewBlog = (props) => {
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
-        <button type="submit">create</button>
+        <div>
+          <button type="submit">create</button>
+        </div>
       </form>
+      <div>
+        <button onClick={props.onCancel}>cancel</button>
+      </div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [createBlogVisible, setCreateBlogVisible] = useState(false);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -61,6 +62,7 @@ const App = () => {
     try {
       const blog = await blogService.create(newBlog);
       setNotification(`a new blog ${blog.title}! by ${blog.author} added`);
+      setCreateBlogVisible(false);
       setTimeout(() => {
         setNotification("");
       }, 5000);
@@ -109,7 +111,16 @@ const App = () => {
       <p>
         {user.name} logged in<button onClick={handleLogout}>logout</button>
       </p>
-      <CreateNewBlog onAddBlog={handleAddBlog} />
+      {!createBlogVisible && (
+        <button onClick={() => setCreateBlogVisible(true)}>
+          create new blog
+        </button>
+      )}
+      <CreateNewBlog
+        createVisible={createBlogVisible}
+        onAddBlog={handleAddBlog}
+        onCancel={() => setCreateBlogVisible(false)}
+      />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
