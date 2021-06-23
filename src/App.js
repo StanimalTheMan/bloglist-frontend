@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
-import CreateNewBlog from "./components/CreateNewBlog";
+import BlogForm from "./components/BlogForm";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -116,7 +116,7 @@ const App = () => {
           create new blog
         </button>
       )}
-      <CreateNewBlog
+      <BlogForm
         createVisible={createBlogVisible}
         onAddBlog={handleAddBlog}
         onCancel={() => setCreateBlogVisible(false)}

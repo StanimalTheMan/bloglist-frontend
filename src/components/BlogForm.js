@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateNewBlog = (props) => {
+const BlogForm = (props) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -9,6 +9,9 @@ const CreateNewBlog = (props) => {
     event.preventDefault();
     console.log(title, author, url);
     props.onAddBlog({ title, author, url });
+    setTitle("");
+    setAuthor("");
+    setUrl("");
   };
 
   const showWhenVisible = { display: props.createVisible ? "" : "none" };
@@ -56,4 +59,4 @@ const CreateNewBlog = (props) => {
   );
 };
 
-export default CreateNewBlog;
+export default BlogForm;
