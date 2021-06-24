@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import blogServices from "../services/blogs";
 
-const Blog = ({ blog, like }) => {
+const Blog = ({ blog, like, user }) => {
   const [viewDetails, setViewDetails] = useState(false);
 
   const toggleViewDetails = () => {
     setViewDetails(!viewDetails);
+  };
+
+  const deleteBlogPost = async (id) => {
+    await blogServices.deleteBlogPost(id);
   };
 
   const blogStyle = {
@@ -34,7 +39,9 @@ const Blog = ({ blog, like }) => {
         <br />
         {blog.author}
         <br />
-        <button>remove</button>
+        {user.username === blog.user.username && (
+          <button onClick={() => deleteBlogPost(blog.id)}>remove</button>
+        )}
       </div>
     );
   }
