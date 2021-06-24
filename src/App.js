@@ -120,6 +120,11 @@ const App = () => {
     );
   }
 
+  const blogsSortedByLikes = blogs.sort((a, b) => {
+    // assume descending order bc you want to see most liked on top
+    return b.likes - a.likes;
+  });
+
   return (
     <div>
       <h2>blogs</h2>
