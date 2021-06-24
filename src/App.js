@@ -42,6 +42,27 @@ const App = () => {
     }
   };
 
+  const deleteBlogPost = async (id) => {
+    const blogToDelete = blogs.find((blog) => blog.id === id);
+    if (
+      window.confirm(
+        `Remove blog ${blogToDelete.title} by ${blogToDelete.author}`
+      )
+    ) {
+      try {
+        await blogService.deleteBlogPost(id);
+        setBlogs(blogs.filter((blog) => blog.id !== blogToDelete.id));
+      } catch (exception) {
+        setErrorMessage(
+          `Blog ${blogToDelete.title} was already removed from server`
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+      }
+    }
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -148,6 +169,7 @@ const App = () => {
           key={blog.id}
           blog={blog}
           like={() => increaseLikes(blog.id)}
+          onDelete={() => deleteBlogPost(blog.id)}
         />
       ))}
     </div>
