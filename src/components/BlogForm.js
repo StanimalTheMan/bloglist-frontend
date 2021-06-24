@@ -17,7 +17,7 @@ const BlogForm = (props) => {
   const showWhenVisible = { display: props.createVisible ? "" : "none" };
 
   return (
-    <div style={showWhenVisible}>
+    <div className="formDiv" style={showWhenVisible}>
       <h2>create new</h2>
 
       <form onSubmit={handleFormSubmit}>
@@ -25,6 +25,7 @@ const BlogForm = (props) => {
           title:
           <input
             type="text"
+            id="title"
             value={title}
             name="Username"
             onChange={({ target }) => setTitle(target.value)}
@@ -34,6 +35,7 @@ const BlogForm = (props) => {
           author:
           <input
             type="text"
+            id="author"
             value={author}
             name="Author"
             onChange={({ target }) => setAuthor(target.value)}
@@ -43,6 +45,7 @@ const BlogForm = (props) => {
           url:
           <input
             type="text"
+            id="url"
             value={url}
             name="URL"
             onChange={({ target }) => setUrl(target.value)}
