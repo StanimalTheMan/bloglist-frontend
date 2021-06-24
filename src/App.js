@@ -28,14 +28,26 @@ const App = () => {
   }, []);
 
   const increaseLikes = async (id) => {
-    const blog = blogs.find((blog) => blog.id === id);
-    const changedBlog = { ...blog, likes: blog.likes + 1 };
+    const blogToUpdate = blogs.find((blog) => blog.id === id);
+    const changedBlog = {
+      user: blogToUpdate.user.id,
+      likes: blogToUpdate.likes + 1,
+      author: blogToUpdate.author,
+      title: blogToUpdate.title,
+      url: blogToUpdate.url,
+    };
     console.log(changedBlog);
     try {
       const updatedBlog = await blogService.update(id, changedBlog);
-      setBlogs(blogs.map((blog) => (blog.id !== blog ? blog : updatedBlog)));
+      setBlogs(
+        blogs.map((blog) =>
+          blog.user.id !== blogToUpdate.user.id ? blog : updatedBlog
+        )
+      );
     } catch (exception) {
-      setErrorMessage(`Blog '${blog.title} was already removed from server`);
+      setErrorMessage(
+        `Blog '${blogToUpdate.title} was already removed from server`
+      );
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
