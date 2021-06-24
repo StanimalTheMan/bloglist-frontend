@@ -120,7 +120,7 @@ const App = () => {
     );
   }
 
-  const blogsSortedByLikes = blogs.sort((a, b) => {
+  const blogsSortedByLikes = blogs.slice().sort((a, b) => {
     // assume descending order bc you want to see most liked on top
     return b.likes - a.likes;
   });
@@ -142,7 +142,7 @@ const App = () => {
         onAddBlog={handleAddBlog}
         onCancel={() => setCreateBlogVisible(false)}
       />
-      {blogs.map((blog) => (
+      {blogsSortedByLikes.map((blog) => (
         <Blog key={blog.id} blog={blog} like={() => increaseLikes(blog.id)} />
       ))}
     </div>

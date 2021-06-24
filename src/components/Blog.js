@@ -33,6 +33,8 @@ const Blog = ({ blog, like }) => {
         <button onClick={like}>like</button>
         <br />
         {blog.author}
+        <br />
+        <button>remove</button>
       </div>
     );
   }
