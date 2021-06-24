@@ -32,4 +32,22 @@ describe("Blog app", function () {
       cy.contains("wrong username or password");
     });
   });
+
+  describe("When logged in", function () {
+    beforeEach(function () {
+      // login user here
+      cy.get("input:first").type("stanimal69");
+      cy.get("input:last").type("wetnoodle74");
+      cy.get("#login-button").click();
+    });
+
+    it("A blog can be created", function () {
+      cy.contains("create new blog").click();
+      cy.get("#title").type("Bee Awareness by a Chemist");
+      cy.get("#author").type("Stan Lee");
+      cy.get("#url").type("https://chronicleflask.com/2021/05/");
+      cy.get("#create").click();
+      cy.contains("Bee Awareness by a Chemist Stan Lee");
+    });
+  });
 });
