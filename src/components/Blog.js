@@ -9,7 +9,9 @@ const Blog = ({ blog, like, user }) => {
   };
 
   const deleteBlogPost = async (id) => {
-    await blogServices.deleteBlogPost(id);
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      await blogServices.deleteBlogPost(id);
+    }
   };
 
   const blogStyle = {
