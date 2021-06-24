@@ -76,4 +76,14 @@ describe("Blog app", function () {
       cy.contains("Bee Awareness by a Chemist Stan Lee").should("not.exist");
     });
   });
+
+  describe("and several notes exist", function () {
+    beforeEach(function () {
+      cy.contains("create new blog").click();
+      cy.get("#title").type("Bee Awareness by a Chemist");
+      cy.get("#author").type("Stan Lee");
+      cy.get("#url").type("https://chronicleflask.com/2021/05/");
+      cy.get("#create").click();
+    });
+  });
 });
